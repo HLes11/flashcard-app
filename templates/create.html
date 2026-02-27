@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="create-container">
+    <h2>ساخت فلش کارت جدید</h2>
+    <form method="POST" class="create-form">
+        <div class="form-group">
+            <label for="title">عنوان فلش کارت (مثلا: لغات درس اول)</label>
+            <input type="text" id="title" name="title" required placeholder="عنوان را وارد کنید...">
+        </div>
+        
+        <div class="form-group">
+            <label for="content">کلمات و معانی (هر خط یک کلمه)</label>
+            <p class="help-text">لطفا با فرمت <strong>کلمه : معنی</strong> وارد کنید.</p>
+            <textarea id="content" name="content" rows="10" required placeholder="apple : سیب&#10;book : کتاب&#10;car : ماشین"></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block">ذخیره و ساخت فلش کارت</button>
+    </form>
+</div>
+{% endblock %}

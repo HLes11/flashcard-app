@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="decks-grid">
+    {% for deck in decks %}
+    <div class="deck-card">
+        <div class="deck-header">
+            <h3>{{ deck.title }}</h3>
+            <form action="{{ url_for('delete_deck', deck_id=deck.id) }}" method="POST" onsubmit="return confirm('آیا از حذف این فلش کارت مطمئن هستید؟');">
+                <button type="submit" class="btn-delete">×</button>
+            </form>
+        </div>
+        <div class="deck-body">
+            <p>{{ deck.card_count }} کارت</p>
+            <p class="date">{{ deck.created_at.strftime('%Y-%m-%d') }}</p>
+        </div>
+        <div class="deck-footer">
+            <a href="{{ url_for('view_deck', deck_id=deck.id) }}" class="btn btn-secondary">مرور کارت‌ها</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>هنوز هیچ فلش کارتی نساخته‌اید.</p>
+        <a href="{{ url_for('create') }}" class="btn btn-primary">اولین فلش کارت خود را بسازید</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

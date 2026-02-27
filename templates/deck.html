@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flashcard-viewer">
+    <div class="viewer-header">
+        <h2>{{ deck.title }}</h2>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">بازگشت</a>
+    </div>
+
+    {% if cards %}
+    <div class="flashcard-container">
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    <p id="card-word" class="card-text"></p>
+                    <span class="hint">برای دیدن معنی کلیک کنید</span>
+                </div>
+                <div class="flashcard-back">
+                    <p id="card-meaning" class="card-text"></p>
+                    <span class="hint">برای دیدن کلمه کلیک کنید</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn btn-icon" onclick="prevCard()" id="btn-prev" title="قبلی">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+        <span class="progress" id="progress-text">1 / {{ cards|length }}</span>
+        <button class="btn btn-icon" onclick="nextCard()" id="btn-next" title="بعدی">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+    </div>
+
+    <script>
+        // Pass cards data from Flask to JavaScript
+        const cards = [
+            {% for card in cards %}
+                { word: {{ card.word|tojson }}, meaning: {{ card.meaning|tojson }} }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ];
+    </script>
+    {% else %}
+    <div class="empty-state">
+        <p>این فلش کارت خالی است.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
